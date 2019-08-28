@@ -40,7 +40,7 @@ public class AutoFormMain extends JFrame implements ActionListener {
 
     // Selenium
     WebDriver driver;
-    private static String URL_TO_FORM = "https://forms.gle/mPDuGJMEcBEFtZZr7";
+    private static String URL_TO_FORM = "https://docs.google.com/forms/d/e/1FAIpQLScfi7qQQac0JvqhMzNLKXaaPtuh9E32Dj_4tA5-IvKZpB9byg/viewform";
 
     public static void main(String[] args) {
         try {
@@ -95,13 +95,13 @@ public class AutoFormMain extends JFrame implements ActionListener {
         panel.add(txaLog);
 
         btnProcess = new JButton("Process");
-        btnProcess.setBounds(73, 155, 84, 21);
+        btnProcess.setBounds(73, 155, 84, 41);
         btnProcess.addActionListener(this);
         panel.add(btnProcess);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setSize(800, 600);
+        setSize(470, 470);
         setResizable(true);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -317,7 +317,7 @@ public class AutoFormMain extends JFrame implements ActionListener {
             WebElement body = driver.findElement(By.cssSelector("body"));
             if (body.isDisplayed()) {
 
-                List<WebElement> inputList = driver.findElements(By.cssSelector("input[type='text']"));
+                List<WebElement> inputList = driver.findElements(By.cssSelector("form input"));
                 for (int i = 0; i < inputList.size(); i++) {
                     switch (i) {
                         case 0:
@@ -348,10 +348,12 @@ public class AutoFormMain extends JFrame implements ActionListener {
                             inputList.get(i).sendKeys(entity.getDjName05());
                             break;
                     }
+                    waitForSecond(500);
                 }
                 // Submit
-                WebElement submitTag = driver.findElement(By.xpath("//*[@id=\"mG61Hd\"]/div/div[2]/div[3]/div[1]/div/div"));
+                WebElement submitTag = driver.findElement(By.xpath("//*[@id=\"mG61Hd\"]/div/div[2]/div[3]/div[3]/div/div"));
                 submitTag.click();
+                waitForSecond(25000);
             }
         } catch (Exception e) {
             log("Unable to find Element", e);
