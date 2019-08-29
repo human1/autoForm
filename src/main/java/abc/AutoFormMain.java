@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 @Log4j
 public class AutoFormMain extends JFrame implements ActionListener {
@@ -311,12 +312,13 @@ public class AutoFormMain extends JFrame implements ActionListener {
     private void processFillData(AsiaDJ entity) {
         log("Process fill data onto form");
         try {
-            waitForSecond(500);
+            waitForSecond(2000);
             processOpenChrome();
             driver.navigate().to(URL_TO_FORM);
             WebElement body = driver.findElement(By.cssSelector("body"));
             if (body.isDisplayed()) {
-
+                waitForSecond(2000);
+                Random r = new Random();
                 List<WebElement> inputList = driver.findElements(By.cssSelector("form input"));
                 for (int i = 0; i < inputList.size(); i++) {
                     switch (i) {
@@ -348,12 +350,12 @@ public class AutoFormMain extends JFrame implements ActionListener {
                             inputList.get(i).sendKeys(entity.getDjName05());
                             break;
                     }
-                    waitForSecond(500);
+                    waitForSecond(r.nextInt((5000 - 1000) + 1) + 1000);
                 }
                 // Submit
                 WebElement submitTag = driver.findElement(By.xpath("//*[@id=\"mG61Hd\"]/div/div[2]/div[3]/div[3]/div/div"));
                 submitTag.click();
-                waitForSecond(25000);
+                waitForSecond(20000);
             }
         } catch (Exception e) {
             log("Unable to find Element", e);
@@ -364,6 +366,7 @@ public class AutoFormMain extends JFrame implements ActionListener {
         log("Opening Chrome...");
         try {
             driver.get("http://www.google.com/xhtml");
+            waitForSecond(2000);
         } catch (Exception e) {
             log("Invalid Chrome Driver", e);
             return;
